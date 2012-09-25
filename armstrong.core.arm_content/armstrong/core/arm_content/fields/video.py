@@ -1,6 +1,12 @@
 from django.db import models
-
+from django.core.exceptions import ValidationError
 from ..video.backends import get_backend
+
+
+def validate_query_string(value):
+    if value.find('?v=') == -1:
+        raise ValidationError(u'%s is not a properly formatted YouTube URL' % value)
+
 
 
 class EmbeddedVideo(object):
@@ -19,6 +25,13 @@ class EmbeddedVideo(object):
 
     def embed(self, **kwargs):
         return self.backend.embed(self, **kwargs)
+
+    def __len__(self):
+        return len(self.raw_url)
+
+    def __unicode__(self):
+        return self.raw_url
+
 
 
 class EmbeddedVideoField(models.URLField):
@@ -40,6 +53,7 @@ class EmbeddedVideoField(models.URLField):
     def formfield(self, **kwargs):
         defaults = {
             "label": "Embedded Video URL",
+            'validators': [validate_query_string]
         }
         defaults.update(**kwargs)
         return super(EmbeddedVideoField, self).formfield(**defaults)
