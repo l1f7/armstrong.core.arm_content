@@ -31,4 +31,4 @@ def get_preset_thumbnail(file_, preset_label, presets=None, defaults=None):
         return file_
     args = get_preset_args(preset_label, presets, defaults)
     dimensions = args.pop('dimensions')
-    return get_thumbnail(file_, dimensions, **args)
+    return (get_thumbnail(file_, dimensions, **args), dimensions)

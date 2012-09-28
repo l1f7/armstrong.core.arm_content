@@ -4,7 +4,7 @@ from ..video.backends import get_backend
 
 
 def validate_query_string(value):
-    if value.find('?v=') == -1:
+    if value.find('v=') == -1:
         raise ValidationError(u'%s is not a properly formatted YouTube URL' % value)
 
 
