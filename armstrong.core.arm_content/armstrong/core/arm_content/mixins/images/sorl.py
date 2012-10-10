@@ -12,7 +12,7 @@ class SorlThumbnailMixin(BaseThumbnailMixin):
         except ValueError: # height doesn't exist
             width = dimensions
             height = False
-        return '<img src="%s" style="width: %spx; height: %spx;" />' % (url, width, height)
+        return '<img src="%s" />' % (url)
 
     def get_visual_thumbnail_url(self, preset_label, presets=None, defaults=None, *args, **kwargs):
         image_file = getattr(self, self.visual_field_name)
